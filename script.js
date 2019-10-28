@@ -49,13 +49,6 @@ function isAbleToMove(direction, command) {
   }
 }
 
-class Rover {
-  constructor(direction, x, y) {
-    this.x = x;
-    this.y = y;
-    this.correctDir(direction);
-  }
-
   //Direction function
   correctDir(direction) {
     let numericDir = 1;
@@ -63,7 +56,7 @@ class Rover {
       numericDir = 4;
 
     //Turns rover left
-    turnLeft(){
+    turnLeft() {
     this.direction--;
     }
     if (direction === "S") {
@@ -78,34 +71,36 @@ class Rover {
     if (direction > 4) {
       this.direction = 1;
 
-//Direction functions
-    roverCommands(orders){
-        for (let i = 0; i < orders.length; i++){
-            let order = orders[i];
-            switch(order) {
-            case "r":
-                this.turnRight;
-                break;
-            case "l":
-                this.turnLeft;
-                break;
-            case "f":
-                this.moveForward;
-                break;
-            case "b":
-                this.moveBack;
-                break;
-            default:
-                console.log("Not a valid command!");
-            }
-        }
-        console.log(this.x, this.y);
-    }
-
     if (direction < 1) {
       this.direction = 4;
     }
   }
+
+
+  //Direction functions
+  roverCommands(orders){
+    for (let i = 0; i < orders.length; i++){
+        let order = orders[i];
+        switch(order) {
+        case "r":
+            this.turnRight;
+            break;
+        case "l":
+            this.turnLeft;
+            break;
+        case "f":
+            this.moveForward;
+            break;
+        case "b":
+            this.moveBack;
+            break;
+        default:
+            console.log("Not a valid command!");
+        }
+    }
+}
+
+
 
   //Turns rover left
   turnLeft() {
