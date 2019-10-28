@@ -61,6 +61,10 @@ class Rover {
     let numericDir = 1;
     if (direction === "W") {
       numericDir = 4;
+
+    //Turns rover left
+    turnLeft(){
+    this.direction--;
     }
     if (direction === "S") {
       numericDir = 3;
@@ -73,6 +77,29 @@ class Rover {
     }
     if (direction > 4) {
       this.direction = 1;
+
+//Direction functions
+    roverCommands(orders){
+        for (let i = 0; i < orders.length; i++){
+            let order = orders[i];
+            switch(order) {
+            case "r":
+                this.turnRight;
+                break;
+            case "l":
+                this.turnLeft;
+                break;
+            case "f":
+                this.moveForward;
+                break;
+            case "b":
+                this.moveBack;
+                break;
+            default:
+                console.log("Not a valid command!");
+            }
+        }
+        console.log(this.x, this.y);
     }
 
     if (direction < 1) {
