@@ -5,30 +5,6 @@ class Rover{
       this.correctDir(direction);
     }
 
-    //Direction function
-    correctDir(direction){ 
-        let numericDir = 1;
-        if(direction === "W"){
-            numericDir = 4;
-        }
-        if(direction === "S"){
-            numericDir = 3;
-        }
-        if(direction === "E"){
-            numericDir = 2;
-        }
-        if(direction === "N"){
-            numericDir = 1;
-        }
-        if(direction > 4){
-            this.direction = 1;
-        }
-        
-        if (direction < 1){
-            this.direction = 4;
-        }
-    }
-
     //Turns rover left
     turnLeft(){
     this.direction--;
@@ -39,6 +15,7 @@ class Rover{
     this.direction++;
     }
 
+//Direction functions
     roverCommands(orders){
         for (let i = 0; i < orders.length; i++){
             let order = orders[i];
@@ -59,6 +36,7 @@ class Rover{
                 console.log("Not a valid command!");
             }
         }
+        console.log(this.x, this.y);
     }
 
 
