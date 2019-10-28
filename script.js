@@ -1,9 +1,11 @@
 class Rover {
-    constructor(direction, x, y) {
+    constructor(direction, x, y, name) {
       this.correctDir(direction);
       this.x = x;
       this.y = y;
+      this.name = name;
       this.direction = 1;
+      this.lastPosition = [];
     }
   
     correctDir(direction){ 
@@ -98,6 +100,8 @@ class Rover {
             else return true;
             }
         }
+
+
   
   
        moveForward (){
@@ -120,8 +124,62 @@ class Rover {
           }
   
   }
+
+
+// class Obstacle {
+//     constructor(x,y){
+//         this.x = x;
+//         this.y = y;
+//     }
+
+//     createObst(){
+//         for(i = 0; i < roverTracker.length; i++){
+//             if(this.x === roverTracker[i].x && this.y === roverTracker[i].y){
+//                 this.x = Math.floor(Math.random() * 10);
+//                 this.y = Math.floor(Math.random() * 10);
+//             }
+//         }
+
+//     }
+
+// }
+
+class Board {
+    constructor(){
+        this.finishedBoard = []
+
+    }
+
+    createBoard = () => {
+        for (let y = 0; y < 10; y++) {
+            const currentCords = []
+             for (let x = 0; x < 10; x++) {
+               currentCords.push(
+                []
+                )
+             }
+             this.finishedBoard.push(currentCords)
+             window.finishedBoard = this.finishedBoard
+           }
+    }
+
+    placeRover = (rover) => {
+        this.finishedBoard[rover.x][rover.y].push(rover.name);
+    }
+
+
+
+
+}
+
+
+
+
+
+
+
   
-  let first = new Rover("N", 1, 1);
+  let first = new Rover("N", 1, 1, "tom");
   
   first.getInfo();
   
