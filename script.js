@@ -1,136 +1,130 @@
 class Rover {
-  constructor(direction, x, y) {
-    this.direction = direction;
-    this.x = x;
-    this.y = y;
-  }
-  moveForward = () => {
-    if (!isAbleToMove(this.direction, "f")) return console.log("Rover can't go outside of the board!");
-    if (this.direction === "N") {
-      this.y--;
-    } else if (this.direction === "E") {
-      this.x++;
-    } else if (this.direction === "S") {
-      this.y++;
-    } else if (this.direction === "W") {
-      this.x--;
-    }
-  };
-  moveBack = () => {
-    if (!isAbleToMove(this.direction, "b")) return console.log("Rover can't go outside of the board!");
-    if (this.direction === "N") {
-      this.y++;
-    } else if (this.direction === "E") {
-      this.x--;
-    } else if (this.direction === "S") {
-      this.y--;
-    } else if (this.direction === "W") {
-      this.x++;
-    }
-  };
-}
-function isAbleToMove(direction, command) {
-  if (command === "f") {
-    if (this.direction === "N" && this.y === 0) return false;
-    else if (this.direction === "S" && this.y === 9) return false;
-    else if (this.direction === "W" && this.x === 0) return false;
-    else if (this.direction === "E" && this.x === 9) return false;
-    else return true;
-  } else if (command === "b") {
-    if (this.direction === "S" && this.y === 0) {
-      return false;
-    } else if (this.direction === "N" && this.y === 9) {
-      return false;
-    } else if (this.direction === "E" && this.x === 0) {
-      return false;
-    } else if (this.direction === "W" && this.x === 9) {
-      return false;
-    } else return true;
-  }
-}
-
-  //Direction function
-  correctDir(direction) {
-    let numericDir = 1;
-    if (direction === "W") {
-      numericDir = 4;
-
-    //Turns rover left
-    turnLeft() {
-    this.direction--;
-    }
-    if (direction === "S") {
-      numericDir = 3;
-    }
-    if (direction === "E") {
-      numericDir = 2;
-    }
-    if (direction === "N") {
-      numericDir = 1;
-    }
-    if (direction > 4) {
+    constructor(direction, x, y) {
+      this.correctDir(direction);
+      this.x = x;
+      this.y = y;
       this.direction = 1;
-
-    if (direction < 1) {
-      this.direction = 4;
     }
-  }
-
-
-  //Direction functions
-  roverCommands(orders){
-    for (let i = 0; i < orders.length; i++){
-        let order = orders[i];
-        switch(order) {
-        case "r":
-            this.turnRight;
-            break;
-        case "l":
-            this.turnLeft;
-            break;
-        case "f":
-            this.moveForward;
-            break;
-        case "b":
-            this.moveBack;
-            break;
-        default:
-            console.log("Not a valid command!");
-        }
-    }
-}
-
-
-
-  //Turns rover left
-  turnLeft() {
-    this.direction--;
-  }
-
-  //Turns rover right
-  turnRight() {
-    this.direction++;
-  }
-
-  roverCommands(orders) {
-    for (let i = 0; i < orders.length; i++) {
-      let order = orders[i];
-      switch (order) {
-        case "r":
-          this.turnRight;
-          break;
-        case "l":
-          this.turnLeft;
-          break;
-        case "f":
-          this.moveForward;
-          break;
-        case "b":
-          this.moveBack;
-          break;
-        default:
-          console.log("Not a valid command!");
+  
+    correctDir(direction){ 
+      if(direction === "W"){
+          this.direction = 4;
+      }
+      if(direction === "S"){
+          this.direction = 3;
+      }
+      if(direction === "E"){
+          this.direction = 2;
+      }
+      if(direction === "N"){
+          this.direction = 1;
+      }
+      if(direction > 4){
+          this.direction = 1;
+      }
+      
+      if (direction < 1){
+          this.direction = 4;
       }
     }
+  
+    getDirection(){
+        if(this.direction === 1){
+          return "N";
+        }
+        if(this.direction === 2){
+          return "E";
+        }
+      if(this.direction === 3){
+          return "S";
+       }
+      if(this.direction === 4){
+          return "W";
+        }
+    }
+  
+    //Turns rover left
+      turnLeft(){
+          console.log("turnLeft was called!");
+          this.direction--;
+          if (this.direction < 1){
+              this.direction = 4;
+          }
+      }
+    
+    //Turns rover right
+      turnRight(){
+          console.log("turnRight was called!");
+          this.direction++;
+          if(this.direction > 4){
+              this.direction = 1;
+          }
+      }
+  
+      commands(orders){
+          for (let i = 0; i < orders.length; i++){
+              let order = orders[i];
+              switch(order) {
+              case "r":
+                  this.turnRight();
+                  break;
+              case "l":
+                  this.turnLeft();
+                  break;
+              case "f":
+                  this.moveForward();
+                  break;
+              case "b":
+                  this.moveBack();
+                  break;
+              default:
+                  console.log("Not a valid command!");
+              }
+          }
+       }
+  
+      isAbleToMove(command) {
+            if (command === "f") {
+            if (this.direction === 1 && this.y === 0) return false;
+            else if (this.direction === 3 && this.y === 9) return false;
+            else if (this.direction === 4 && this.x === 0) return false;
+            else if (this.direction === 2 && this.x === 9) return false;
+            else return true;
+            } else if (command === "b") {
+            if (this.direction === 3 && this.y === 0) return false;
+            else if (this.direction === 1 && this.y === 9) return false;
+            else if (this.direction === 2 && this.x === 0) return false;
+            else if (this.direction === 4 && this.x === 9) return false;
+            else return true;
+            }
+        }
+  
+  
+       moveForward (){
+          if (!this.isAbleToMove("f")) return console.log("Rover can't go outside of the board!");
+            if (this.direction === 1) this.y--;
+            else if (this.direction === 2)  this.x++;
+            else if (this.direction === 3)  this.y++;
+            else if (this.direction === 4) this.x--;
+        };
+        moveBack() {
+          if (!this.isAbleToMove("b")) return console.log("Rover can't go outside of the board!");
+           else if (this.direction === 1) this.y++;
+           else if (this.direction === 2) this.x--;
+           else if (this.direction === 3) this.y--;
+           else if (this.direction === 4) this.x++;
+        }
+  
+          getInfo(){
+            console.log(this.getDirection(), this.y, this.x);
+          }
+  
   }
-}
+  
+  let first = new Rover("N", 1, 1);
+  
+  first.getInfo();
+  
+  first.commands("rffflfffffff");
+  
+  first.getInfo();
