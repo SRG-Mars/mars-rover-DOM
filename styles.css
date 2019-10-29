@@ -32,8 +32,15 @@
 }
 
 #obstacle {
+<<<<<<< HEAD
   height: 25px;
   width: 25px;
   border-radius: 50%;
   background-color: orange;
+=======
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: orange;
+>>>>>>> e5cdd2573c71fa13a8544dbc22fc701b7a58fd9d
 }
