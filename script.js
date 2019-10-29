@@ -1,16 +1,11 @@
-class Obstacles {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-}
-
 class Rover {
-  constructor(direction, x, y) {
+  constructor(direction, x, y, name) {
     this.correctDir(direction);
     this.x = x;
     this.y = y;
+    this.name = name;
     this.direction = 1;
+    this.lastPosition = [];
   }
 
   correctDir(direction) {
@@ -67,7 +62,6 @@ class Rover {
       this.direction = 1;
     }
   }
-
   commands(orders) {
     for (let i = 0; i < orders.length; i++) {
       let order = orders[i];
@@ -92,16 +86,16 @@ class Rover {
 
   isAbleToMove(command) {
     if (command === "f") {
-      if (this.direction === 1 && this.y === 0) return false;
-      else if (this.direction === 3 && this.y === 9) return false;
-      else if (this.direction === 4 && this.x === 0) return false;
-      else if (this.direction === 2 && this.x === 9) return false;
+      if (this.direction === 1 && this.y === 0 && this.x === obstacle.x && this.y-- === obstacle.y) return false;
+      else if (this.direction === 3 && this.y === 9 && this.x === obstacle.x && this.y++ === obstacle.y) return false;
+      else if (this.direction === 4 && this.x === 0 && this.x-- === obstacle.x && this.y === obstacle.y) return false;
+      else if (this.direction === 2 && this.x === 9 && this.x++ === obstacle.x && this.y === obstacle.y) return false;
       else return true;
     } else if (command === "b") {
-      if (this.direction === 3 && this.y === 0) return false;
-      else if (this.direction === 1 && this.y === 9) return false;
-      else if (this.direction === 2 && this.x === 0) return false;
-      else if (this.direction === 4 && this.x === 9) return false;
+      if (this.direction === 3 && this.y === 0 && this.x === obstacle.x && this.y-- === obstacle.y) return false;
+      else if (this.direction === 1 && this.y === 9 && this.x === obstacle.x && this.y++ === obstacle.y) return false;
+      else if (this.direction === 2 && this.x === 0 && this.x-- === obstacle.x && this.y === obstacle.y) return false;
+      else if (this.direction === 4 && this.x === 9 && this.x++ === obstacle.x && this.y === obstacle.y) return false;
       else return true;
     }
   }
@@ -112,21 +106,77 @@ class Rover {
     else if (this.direction === 2) this.x++;
     else if (this.direction === 3) this.y++;
     else if (this.direction === 4) this.x--;
+    this.moveOnBoard();
   }
   moveBack() {
     if (!this.isAbleToMove("b")) return console.log("Rover can't go outside of the board!");
-    else if (this.direction === 1) this.y++;
+    if (this.direction === 1) this.y++;
     else if (this.direction === 2) this.x--;
     else if (this.direction === 3) this.y--;
     else if (this.direction === 4) this.x++;
+    this.moveOnBoard();
   }
-
   getInfo() {
     console.log(this.getDirection(), this.y, this.x);
   }
+  getBoardPosition() {
+    for (i = 0; i < currentBoard.length; i++) {
+      for (j = 0; j < currentBoard[j]; i++) {
+        if (currentBoard[i][j].includes(this.name)) {
+          return ``;
+        }
+      }
+    }
+  }
+  moveOnBoard() {
+    for (i = 0; i < currentBoard.length; i++) {
+      for (j = 0; j < currentBoard[j]; i++) {
+        if (currentBoard[i][j].includes(this.name)) {
+          currentBoard[i][j].splice(currentBoard[i][j], 1, []);
+          currentBoard[this.x][this.y] = this.name;
+        }
+      }
+    }
+  }
+}
+// class Obstacle {
+//     constructor(x,y){
+//         this.x = x;
+//         this.y = y;
+//     }
+//     createObst(){
+//         for(i = 0; i < roverTracker.length; i++){
+//             if(this.x === roverTracker[i].x && this.y === roverTracker[i].y){
+//                 this.x = Math.floor(Math.random() * 10);
+//                 this.y = Math.floor(Math.random() * 10);
+//             }
+//         }
+//     }
+// }
+class Board {
+  constructor() {
+    this.finishedBoard = [];
+  }
+  createBoard = () => {
+    for (let y = 0; y < 10; y++) {
+      const currentCords = [];
+      for (let x = 0; x < 10; x++) {
+        currentCords.push([]);
+      }
+      this.finishedBoard.push(currentCords);
+      window.finishedBoard = this.finishedBoard;
+    }
+  };
+  placeRover = rover => {
+    this.finishedBoard[rover.x][rover.y].push(rover.name);
+  };
 }
 
-let first = new Rover("N", 1, 1);
+let first = new Rover("N", 1, 1, "tom");
+
+first.getInfo();
+
+first.commands("rffflfffffff");
 
 first.getInfo();
 
