@@ -1,3 +1,6 @@
+
+
+
 class Rover {
     constructor(direction, x, y, name) {
       this.correctDir(direction);
@@ -104,30 +107,31 @@ class Rover {
 
 
     moveForward (){
+        console.log('Forward was called');
         if (!this.isAbleToMove("f")) return console.log("Rover can't go outside of the board!");
         if (this.direction === 1) {
+            currentBoard.theBoard[this.y][this.x] = "free";
+            currentBoard.theBoard[this.y-1][this.x] = this.name;
             this.y--;
-            currentBoard.theBoard[this.x][this.y-1] = this.name;
-            currentBoard.theBoard[this.x][this.y] = "free";
-
+            refreshBoard();
         }
         else if (this.direction === 2)  {
+            currentBoard.theBoard[this.y][this.x] = "free";
+            currentBoard.theBoard[this.y][this.x+1] = this.name;
             this.x++;
-            currentBoard.theBoard[this.x+1][this.y] = this.name;
-            currentBoard.theBoard[this.x][this.y] = "free";
-
+            refreshBoard();
         }
         else if (this.direction === 3)  {
+            currentBoard.theBoard[this.y][this.x] = "free";
+            currentBoard.theBoard[this.y+1][this.x] = this.name;
             this.y++;
-            currentBoard.theBoard[this.x][this.y+1] = this.name;
-            currentBoard.theBoard[this.x][this.y] = "free";
-
+            refreshBoard();
         }
         else if (this.direction === 4) {
+            currentBoard.theBoard[this.y][this.x] = "free";
+            currentBoard.theBoard[this.y][this.x-1] = this.name;
             this.x--;
-            currentBoard.theBoard[this.x-1][this.y] = this.name;
-            currentBoard.theBoard[this.x][this.y] = "free";
-
+            refreshBoard();
         }
     };
     moveBack() {
@@ -202,6 +206,7 @@ class Board {
         console.log(currentBoard.theBoard[randomRow][randomCol]);
         if(currentBoard.theBoard[randomRow][randomCol] === "free"){
             currentBoard.theBoard[randomRow][randomCol] = "obstacle";
+            refreshBoard();
         }else{
             this.createObstacle();
         }
@@ -219,10 +224,43 @@ let first = new Rover("N", 1, 1, "tom");
 
 currentBoard.placeRover(first);
 
-// first.getInfo();
+first.commands("f");
 
-// first.commands("rffflfffffff");
 
-// first.getInfo();
 
-// first.getBoardPosition();
+function refreshBoard(){
+    for(let i = 0; i < currentBoard.theBoard.length; i++){
+        for(let j = 0; j < currentBoard.theBoard.length; j++){
+            if(currentBoard.theBoard[j][i] === "free"){
+                document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"http://placehold.it/350x350\" width=\"100%\" height=\"100%\">";
+            }
+            if(currentBoard.theBoard[j][i] === first.name){
+                document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robot.jpg\" width=\"100%\" height=\"100%\">";
+            }
+            if(currentBoard.theBoard[j][i] === "obstacle"){
+                document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"download.jpg\" width=\"100%\" height=\"100%\">";
+            }
+        }
+    }
+
+}
+refreshBoard();
+
+document.addEventListener("keydown", getKey);
+
+function getKey(e){
+    switch(e.key){
+        case "w":
+            first.moveForward();
+            break;
+        case "e":
+            first.turnLeft();
+            break;
+        case "q":
+            first.turnRight();
+            break;
+        case "s":
+            first.moveBack();
+    }
+}
+
