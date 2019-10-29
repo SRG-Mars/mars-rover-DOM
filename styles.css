@@ -25,4 +25,17 @@
     align-items: center;
 }
 
+#rover {
+    height: 25px;
+    width: 25px;
+    background-image: url("https://image.flaticon.com/icons/svg/1751/1751949.svg");
+}
+
+#obstacle {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: orange;
+
+}
 
