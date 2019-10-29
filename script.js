@@ -114,6 +114,7 @@ class Rover {
             if(currentBoard.theBoard[this.y-1][this.x] === "points"){
                 first.points += 100;
                 document.querySelector('.scoreCount > span').innerHTML = first.points;
+                newBoardFunction();
             }
             if(currentBoard.theBoard[this.y-1][this.x] === "obstacle"){
                 return;
@@ -127,6 +128,7 @@ class Rover {
             if(currentBoard.theBoard[this.y][this.x+1] === "points"){
                 first.points += 100;
                 document.querySelector('.scoreCount > span').innerHTML = first.points;
+                newBoardFunction();
             }
             if(currentBoard.theBoard[this.y][this.x+1] === "obstacle"){
                 return;
@@ -140,6 +142,7 @@ class Rover {
             if(currentBoard.theBoard[this.y+1][this.x] === "points"){
                 first.points += 100;
                 document.querySelector('.scoreCount > span').innerHTML = first.points;
+                newBoardFunction();
             }
             if(currentBoard.theBoard[this.y+1][this.x] === "obstacle"){
                 return;
@@ -153,6 +156,7 @@ class Rover {
             if(currentBoard.theBoard[this.y][this.x-1] === "points"){
                 first.points += 100;
                 document.querySelector('.scoreCount > span').innerHTML = first.points;
+                newBoardFunction();
             }
             if(currentBoard.theBoard[this.y][this.x-1] === "obstacle"){
                 return;
@@ -331,19 +335,22 @@ function getKey(e){
     }
 }
 
-if(first.points != 0 && first.points % 500 === 0){
-    currentBoard.createBoard();
-    currentBoard.createObstacle();
-currentBoard.createObstacle();
-currentBoard.createObstacle();
-currentBoard.createObstacle();
-currentBoard.createObstacle();
-currentBoard.createPoints();
-currentBoard.createPoints();
-currentBoard.createPoints();
-currentBoard.createPoints();
-currentBoard.createPoints();
-currentBoard.createPoints();
-    refreshBoard();
+let newBoardFunction = function (){
+    if(first.points % 500 === 0){
+        currentBoard.createBoard();
+        currentBoard.createObstacle();
+        currentBoard.createObstacle();
+        currentBoard.createObstacle();
+        currentBoard.createObstacle();
+        currentBoard.createObstacle();
+        currentBoard.createPoints();
+        currentBoard.createPoints();
+        currentBoard.createPoints();
+        currentBoard.createPoints();
+        currentBoard.createPoints();
+        currentBoard.createPoints();
+        refreshBoard();
+    }
 }
+
 
