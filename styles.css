@@ -1,0 +1,41 @@
+.whole-page{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mars-board{
+    width: 60%;
+    height: 60vh;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+.row{
+    width: 100%;
+    height: 10%;
+    display: flex;
+}
+.col{
+    border: 1px dotted red;
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rover {
+    height: 25px;
+    width: 25px;
+    background-image: url("https://image.flaticon.com/icons/svg/1751/1751949.svg");
+}
+
+#obstacle {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: orange;
+
+}
+
