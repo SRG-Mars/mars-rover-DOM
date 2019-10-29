@@ -164,15 +164,6 @@ class Rover {
   
   }
 
-
-class Obstacle {
-    constructor(x,y){
-        this.x = x;
-        this.y = y;
-    }
-
-}
-
 class Board {
     constructor(){
         this.theBoard= [];
@@ -232,10 +223,23 @@ function refreshBoard(){
     for(let i = 0; i < currentBoard.theBoard.length; i++){
         for(let j = 0; j < currentBoard.theBoard.length; j++){
             if(currentBoard.theBoard[j][i] === "free"){
-                document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"http://placehold.it/350x350\" width=\"100%\" height=\"100%\">";
+                document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "";
             }
             if(currentBoard.theBoard[j][i] === first.name){
-                document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robot.jpg\" width=\"100%\" height=\"100%\">";
+                switch(first.direction){
+                    case 1:
+                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robot.png\" width=\"100%\" height=\"100%\">";
+                        break;
+                    case 2:
+                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robotright.png\" width=\"100%\" height=\"100%\">";
+                        break;
+                    case 3:
+                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robotdown.png\" width=\"100%\" height=\"100%\">";
+                        break;
+                    case 4:
+                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robotleft.png\" width=\"100%\" height=\"100%\">";
+                        break;
+                }
             }
             if(currentBoard.theBoard[j][i] === "obstacle"){
                 document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"download.jpg\" width=\"100%\" height=\"100%\">";
@@ -244,6 +248,12 @@ function refreshBoard(){
     }
 
 }
+
+currentBoard.createObstacle();
+currentBoard.createObstacle();
+currentBoard.createObstacle();
+currentBoard.createObstacle();
+currentBoard.createObstacle();
 refreshBoard();
 
 document.addEventListener("keydown", getKey);
