@@ -91,19 +91,19 @@ class Rover {
   
     isAbleToMove(command) {
         if (command === "f") {
-        if (this.direction === 1 && this.y === 0) return false;
-        else if (this.direction === 2 && this.x === 9) return false;
-        else if (this.direction === 3 && this.y === 9) return false;
-        else if (this.direction === 4 && this.x === 0) return false;
-        else return true;
+          if (this.direction === 1 && this.y === 0 && currentBoard[this.y - 1][this.x] === "obstacle") return false;
+          else if (this.direction === 2 && this.x === 9 && currentBoard[this.y][this.x + 1] === "obstacle") return false;
+          else if (this.direction === 3 && this.y === 9 && currentBoard[this.y + 1][this.x] === "obstacle") return false;
+          else if (this.direction === 4 && this.x === 0 && currentBoard[this.y][this.x - 1] === "obstacle") return false;
+          else return true;
         } else if (command === "b") {
-        if (this.direction === 3 && this.y === 0) return false;
-        else if (this.direction === 1 && this.y === 9) return false;
-        else if (this.direction === 2 && this.x === 0) return false;
-        else if (this.direction === 4 && this.x === 9) return false;
-        else return true;
+          if (this.direction === 3 && this.y === 0 && currentBoard[this.y - 1][this.x] === "obstacle" ) return false;
+          else if (this.direction === 1 && this.y === 9 && currentBoard[this.y + 1][this.x] === "obstacle") return false;
+          else if (this.direction === 2 && this.x === 0 && currentBoard[this.y][this.x - 1] === "obstacle") return false;
+          else if (this.direction === 4 && this.x === 9 && currentBoard[this.y][this.x + 1] === "obstacle") return false;
+          else return true;
         }
-    }
+      }
 
 
 
@@ -111,69 +111,83 @@ class Rover {
         console.log('Forward was called');
         if (!this.isAbleToMove("f")) return console.log("Rover can't go outside of the board!");
         if (this.direction === 1) {
-            currentBoard.theBoard[this.y][this.x] = "free";
             if(currentBoard.theBoard[this.y-1][this.x] === "points"){
                 first.points += 100;
                 document.querySelector('.scoreCount > span').innerHTML = first.points;
             }
+            if(currentBoard.theBoard[this.y-1][this.x] === "obstacle"){
+                return;
+            }
+            currentBoard.theBoard[this.y][this.x] = "free";
             currentBoard.theBoard[this.y-1][this.x] = this.name;
             this.y--;
             refreshBoard();
         }
         else if (this.direction === 2)  {
-            currentBoard.theBoard[this.y][this.x] = "free";
             if(currentBoard.theBoard[this.y][this.x+1] === "points"){
                 first.points += 100;
                 document.querySelector('.scoreCount > span').innerHTML = first.points;
             }
+            if(currentBoard.theBoard[this.y][this.x+1] === "obstacle"){
+                return;
+            }
+            currentBoard.theBoard[this.y][this.x] = "free";
             currentBoard.theBoard[this.y][this.x+1] = this.name;
             this.x++;
             refreshBoard();
         }
         else if (this.direction === 3)  {
-            currentBoard.theBoard[this.y][this.x] = "free";
             if(currentBoard.theBoard[this.y+1][this.x] === "points"){
                 first.points += 100;
                 document.querySelector('.scoreCount > span').innerHTML = first.points;
             }
+            if(currentBoard.theBoard[this.y+1][this.x] === "obstacle"){
+                return;
+            }
+            currentBoard.theBoard[this.y][this.x] = "free";
             currentBoard.theBoard[this.y+1][this.x] = this.name;
             this.y++;
             refreshBoard();
         }
         else if (this.direction === 4) {
-            currentBoard.theBoard[this.y][this.x] = "free";
             if(currentBoard.theBoard[this.y][this.x-1] === "points"){
                 first.points += 100;
                 document.querySelector('.scoreCount > span').innerHTML = first.points;
             }
+            if(currentBoard.theBoard[this.y][this.x-1] === "obstacle"){
+                return;
+            }
+            currentBoard.theBoard[this.y][this.x] = "free";
             currentBoard.theBoard[this.y][this.x-1] = this.name;
             this.x--;
             refreshBoard();
         }
     };
     moveBack() {
+        console.log("backwards was called!");
         if (!this.isAbleToMove("b")) return console.log("Rover can't go outside of the board!");
         if (this.direction === 1) {
-            this.y++;
-            currentBoard.theBoard[this.x][this.y+1] = this.name;
-            currentBoard.theBoard[this.x][this.y] = "free";
+          currentBoard.theBoard[this.y][this.x] = "free";
+          currentBoard.theBoard[this.y + 1][this.x] = this.name;
+          this.y++;
+          refreshBoard();
+        } else if (this.direction === 2) {
+          currentBoard.theBoard[this.y][this.x] = "free";
+          currentBoard.theBoard[this.y][this.x - 1] = this.name;
+          this.x--;
+          refreshBoard();
+        } else if (this.direction === 3) {
+          currentBoard.theBoard[this.y][this.x] = "free";
+          currentBoard.theBoard[this.y - 1][this.x] = this.name;
+          this.y--;
+          refreshBoard();
+        } else if (this.direction === 4) {
+          currentBoard.theBoard[this.y][this.x] = "free";
+          currentBoard.theBoard[this.y][this.x + 1] = this.name;
+          this.x++;
+          refreshBoard();
         }
-        else if (this.direction === 2) {
-            this.x--;
-            currentBoard.theBoard[this.x-1][this.y] = this.name;
-            currentBoard.theBoard[this.x][this.y] = "free";
-        }
-        else if (this.direction === 3) {
-            this.y--;
-            currentBoard.theBoard[this.x][this.y-1] = this.name;
-            currentBoard.theBoard[this.x][this.y] = "free";
-        }
-        else if (this.direction === 4) {
-            this.x++;
-            currentBoard.theBoard[this.x+1][this.y] = this.name;
-            currentBoard.theBoard[this.x][this.y] = "free";
-        }
-    }
+      }
 
     getInfo(){
     console.log(this.getDirection(), this.y, this.x);
@@ -188,6 +202,7 @@ class Board {
     }
 
     createBoard (){
+        this.theBoard = [];
         for (let y = 0; y < 10; y++) {
             const currentCords = []
              for (let x = 0; x < 10; x++) {
@@ -314,5 +329,21 @@ function getKey(e){
         case "s":
             first.moveBack();
     }
+}
+
+if(first.points != 0 && first.points % 500 === 0){
+    currentBoard.createBoard();
+    currentBoard.createObstacle();
+currentBoard.createObstacle();
+currentBoard.createObstacle();
+currentBoard.createObstacle();
+currentBoard.createObstacle();
+currentBoard.createPoints();
+currentBoard.createPoints();
+currentBoard.createPoints();
+currentBoard.createPoints();
+currentBoard.createPoints();
+currentBoard.createPoints();
+    refreshBoard();
 }
 
