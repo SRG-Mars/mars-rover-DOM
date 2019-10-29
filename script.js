@@ -9,6 +9,7 @@ class Rover {
       this.name = name;
       this.direction = 1;
       this.lastPosition = [];
+      this.points = 0;
     }
   
     correctDir(direction){ 
@@ -111,24 +112,40 @@ class Rover {
         if (!this.isAbleToMove("f")) return console.log("Rover can't go outside of the board!");
         if (this.direction === 1) {
             currentBoard.theBoard[this.y][this.x] = "free";
+            if(currentBoard.theBoard[this.y-1][this.x] === "points"){
+                first.points += 100;
+                document.querySelector('.scoreCount > span').innerHTML = first.points;
+            }
             currentBoard.theBoard[this.y-1][this.x] = this.name;
             this.y--;
             refreshBoard();
         }
         else if (this.direction === 2)  {
             currentBoard.theBoard[this.y][this.x] = "free";
+            if(currentBoard.theBoard[this.y][this.x+1] === "points"){
+                first.points += 100;
+                document.querySelector('.scoreCount > span').innerHTML = first.points;
+            }
             currentBoard.theBoard[this.y][this.x+1] = this.name;
             this.x++;
             refreshBoard();
         }
         else if (this.direction === 3)  {
             currentBoard.theBoard[this.y][this.x] = "free";
+            if(currentBoard.theBoard[this.y+1][this.x] === "points"){
+                first.points += 100;
+                document.querySelector('.scoreCount > span').innerHTML = first.points;
+            }
             currentBoard.theBoard[this.y+1][this.x] = this.name;
             this.y++;
             refreshBoard();
         }
         else if (this.direction === 4) {
             currentBoard.theBoard[this.y][this.x] = "free";
+            if(currentBoard.theBoard[this.y][this.x-1] === "points"){
+                first.points += 100;
+                document.querySelector('.scoreCount > span').innerHTML = first.points;
+            }
             currentBoard.theBoard[this.y][this.x-1] = this.name;
             this.x--;
             refreshBoard();
@@ -203,6 +220,22 @@ class Board {
         }
     }
 
+    createPoints(){
+        console.log('Points Created');
+        let randomCol = Math.floor(Math.random() * 10);
+        let randomRow = Math.floor(Math.random() * 10);
+
+        console.log(randomCol);
+        console.log(randomRow);
+        console.log(currentBoard.theBoard[randomRow][randomCol]);
+        if(currentBoard.theBoard[randomRow][randomCol] === "free"){
+            currentBoard.theBoard[randomRow][randomCol] = "points";
+            refreshBoard();
+        }else{
+            this.createObstacle();
+        }
+    }
+
 }
 
 
@@ -228,21 +261,24 @@ function refreshBoard(){
             if(currentBoard.theBoard[j][i] === first.name){
                 switch(first.direction){
                     case 1:
-                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robot.png\" width=\"100%\" height=\"100%\">";
+                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robotleft.png\" width=\"100%\" height=\"100%\">";
                         break;
                     case 2:
-                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robotright.png\" width=\"100%\" height=\"100%\">";
-                        break;
-                    case 3:
                         document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robotdown.png\" width=\"100%\" height=\"100%\">";
                         break;
+                    case 3:
+                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robotright.png\" width=\"100%\" height=\"100%\">";
+                        break;
                     case 4:
-                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robotleft.png\" width=\"100%\" height=\"100%\">";
+                        document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"robot.png\" width=\"100%\" height=\"100%\">";
                         break;
                 }
             }
             if(currentBoard.theBoard[j][i] === "obstacle"){
                 document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"download.jpg\" width=\"100%\" height=\"100%\">";
+            }
+            if(currentBoard.theBoard[j][i] === "points"){
+                document.querySelector(`.row${i+1} > .col${j+1}`).innerHTML = "<img src=\"coin.jpg\" width=\"100%\" height=\"100%\">";
             }
         }
     }
@@ -254,6 +290,12 @@ currentBoard.createObstacle();
 currentBoard.createObstacle();
 currentBoard.createObstacle();
 currentBoard.createObstacle();
+currentBoard.createPoints();
+currentBoard.createPoints();
+currentBoard.createPoints();
+currentBoard.createPoints();
+currentBoard.createPoints();
+currentBoard.createPoints();
 refreshBoard();
 
 document.addEventListener("keydown", getKey);
